@@ -1,0 +1,37 @@
+{
+  "id": "/nginx",
+  "cmd": null,
+  "cpus": 1,
+  "mem": 128,
+  "disk": 0,
+  "instances": 1,
+  "container": {
+    "docker": {
+      "image": "nginx",
+      "network": "BRIDGE",
+      "forcePullImage": true,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "protocol": "tcp",
+          "name": "http"
+        }
+      ]
+    },
+    "type": "DOCKER",
+    "volumes": []
+  },
+  "env": {},
+  "labels": {},
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/index.html",
+      "portIndex": 0,
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ]
+}

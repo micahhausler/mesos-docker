@@ -1,0 +1,105 @@
+version: "2"
+services:
+  zk1:
+    image: "micahhausler/docker-zk-exhibitor"
+    hostname: "zk1"
+    networks:
+      - mesos
+    ports:
+      - 2181  # Client port
+      - 2888  # cluster port
+      - 3888  # cluster port
+      - 8181:8181  # Exhibitor port
+    volumes:
+      - "./data/:/opt/zookeeper/local_configs/"
+  #zk2:
+  #  image: "micahhausler/docker-zk-exhibitor"
+  #  hostname: "zk2"
+  #  networks:
+  #    - mesos
+  #  ports:
+  #    - 2181  # Client port
+  #    - 2888  # cluster port
+  #    - 3888  # cluster port
+  #    - 8181  # Exhibitor port
+  #  volumes:
+  #    - "./data/:/opt/zookeeper/local_configs/"
+  #zk3:
+  #  image: "micahhausler/docker-zk-exhibitor"
+  #  hostname: "zk3"
+  #  networks:
+  #    - mesos
+  #  ports:
+  #    - 2181  # Client port
+  #    - 2888  # cluster port
+  #    - 3888  # cluster port
+  #    - 8181  # Exhibitor port
+  #  volumes:
+  #    - "./data/:/opt/zookeeper/local_configs/"
+  mesos:
+    build: "./mesos"
+    command: |
+        /usr/bin/mesos master \
+            --advertise_ip=192.168.99.100 \
+            --log_dir=/var/log/mesos \
+            --work_dir=/var/mesos/work \
+            --zk=zk://zk1:2181/mesos \
+            --quorum=1 \
+            --cluster=MesosInDocker
+    hostname: "mesos"
+    networks:
+      - mesos
+    ports:
+      - "5050:5050"  # Mesos
+  mesos_slave:
+    build: "./mesos"
+    command: |
+        mesos slave \
+            --advertise_ip=192.168.99.100 \
+            --log_dir=/var/log/mesos \
+            --containerizers=docker,mesos \
+            --executor_registration_timeout=5mins \
+            --work_dir=/var/mesos/work \
+            --docker=/usr/local/bin/docker \
+            --docker_mesos_image=mesosdocker_mesos_slave \
+            --docker_socket=/var/run/docker.sock \
+            --master=zk://zk1:2181/mesos \
+            --no-systemd_enable_support
+    hostname: "mesos_slave"
+    #privileged: true
+    pid: host
+    environment:
+      MESOS_ISOLATOR: "cgroups/cpu,cgroups/mem"
+      MESOS_CONTAINERIZERS: "docker,mesos"
+    networks:
+      - mesos
+    ports:
+      - "5051:5051"  # Mesos-slave
+    volumes:
+      - "/sys:/sys"
+      - "/sys/fs/cgroup:/sys/fs/cgroup"
+      #- "/proc:/proc"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/usr/local/bin/docker:/usr/local/bin/docker"
+  marathon:
+    build: "./marathon"
+    hostname: "marathon"
+    command: "java -jar /marathon-runnable.jar --zk zk://zk1:2181/marathon --master zk://zk1:2181/mesos --enable_features=vips,task_killing"
+    networks:
+      - mesos
+    ports:
+      - "8080:8080"  # Marathon
+  chronos:
+    build: "./chronos"
+    command: "/usr/bin/chronos"
+    hostname: "chronos"
+    privileged: true
+    networks:
+      - mesos
+    ports:
+      - "4400:4400"  # chronos
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/usr/local/bin/docker:/usr/local/bin/docker"
+networks:
+  mesos:
