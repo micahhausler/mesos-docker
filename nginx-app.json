@@ -1,7 +1,7 @@
 {
   "id": "/nginx",
   "cmd": null,
-  "cpus": .2,
+  "cpus": 0.2,
   "mem": 128,
   "disk": 0,
   "instances": 1,
