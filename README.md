@@ -16,6 +16,25 @@ You can then open (assuming your docker machine ip is 192.168.99.100)
 
 ## This is Broken
 
+```
+$ docker version
+Client:
+ Version:      1.11.0
+ API version:  1.23
+ Go version:   go1.5.4
+ Git commit:   4dc5990
+ Built:        Wed Apr 13 18:13:28 2016
+ OS/Arch:      darwin/amd64
+
+Server:
+ Version:      1.11.0
+ API version:  1.23
+ Go version:   go1.5.4
+ Git commit:   4dc5990
+ Built:        Wed Apr 13 19:36:04 2016
+ OS/Arch:      linux/amd64
+```
+
 Currently, if you run the `create-nginx.sh` script, it will create an app in marathon
 consisting of a stock nginx docker container.
 
