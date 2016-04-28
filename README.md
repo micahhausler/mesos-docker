@@ -32,13 +32,11 @@ and the mesos agent flags as provided in `docker-compose.yml`
 To run a second slave using docker-machine, first create the machine:
 
 ```
-docker-machine create -d virtualbox --virtualbox-cpu-count 2 --virtualbox-memory=2048 slave2
-```
-
-Then run the following:
-
-```
+docker-machine create -d virtualbox --virtualbox-cpu-count 1 --virtualbox-memory=1024 slave2
+eval $(docker-machine  env slave2)
 docker-compose -f docker-compose-slave.yml build
+docker-compose -f docker-compose-slave.yml up -d
 ```
 
-You may have to edit the `docker-compose-slave.yml` to update the IP addresses
+You may have to edit the `docker-compose-slave.yml` to update the IP addresses for your
+VMs
