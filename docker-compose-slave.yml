@@ -1,0 +1,30 @@
+version: "2"
+services:
+  mesos_slave:
+    build: "./mesos"
+    command: |
+        mesos slave \
+            --advertise_ip=192.168.99.101 \
+            --log_dir=/var/log/mesos \
+            --containerizers=docker,mesos \
+            --executor_registration_timeout=5mins \
+            --work_dir=/var/mesos/work \
+            --docker=/usr/bin/docker \
+            --docker_mesos_image=mesosdocker_mesos_slave \
+            --docker_socket=/var/run/docker.sock \
+            --master=zk://192.168.99.100:2181/mesos \
+            --no-systemd_enable_support
+    privileged: true
+    pid: host
+    environment:
+      MESOS_ISOLATOR: "cgroups/cpu,cgroups/mem"
+      MESOS_CONTAINERIZERS: "docker,mesos"
+    network_mode: host
+    ports:
+      - "5051:5051"  # Mesos-slave
+    volumes:
+      - "/sys:/sys"
+      - "/var/lib/docker/aufs:/var/lib/docker/aufs"
+      - "/usr/local/lib/libdevmapper.so.1.02:/lib/libdevmapper.so.1.02:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/usr/local/bin/docker:/usr/local/bin/docker"

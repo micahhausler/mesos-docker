@@ -43,4 +43,4 @@ ADD marathon-runnable.jar /marathon-runnable.jar
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "/marathon-runnable.jar", "--zk=zk://zk1:2181/marathon", "--master=zk://zk1:2181/mesos"]
+CMD ["java", "-jar", "/marathon-runnable.jar", "--zk=zk://127.0.0.1:2181/marathon", "--master=zk://127.0.0.1:2181/mesos"]

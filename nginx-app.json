@@ -1,10 +1,10 @@
 {
-  "id": "/nginx",
+  "id": "nginx",
   "cmd": null,
   "cpus": 0.2,
   "mem": 128,
   "disk": 0,
-  "instances": 1,
+  "instances": 2,
   "container": {
     "docker": {
       "image": "nginx",
