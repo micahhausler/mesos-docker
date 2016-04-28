@@ -60,14 +60,13 @@ services:
             --containerizers=docker,mesos \
             --executor_registration_timeout=5mins \
             --work_dir=/var/mesos/work \
-            --docker=/usr/local/bin/docker \
+            --docker=/usr/bin/docker \
             --docker_mesos_image=mesosdocker_mesos_slave \
             --docker_socket=/var/run/docker.sock \
             --master=zk://zk1:2181/mesos \
             --no-systemd_enable_support
     hostname: "mesos_slave"
-    #privileged: true
-    pid: host
+    privileged: true
     environment:
       MESOS_ISOLATOR: "cgroups/cpu,cgroups/mem"
       MESOS_CONTAINERIZERS: "docker,mesos"
@@ -79,7 +78,7 @@ services:
       - "/sys:/sys"
       - "/sys/fs/cgroup:/sys/fs/cgroup"
       - "/var/lib/docker/aufs:/var/lib/docker/aufs"
-      #- "/proc:/proc"
+      - "/usr/local/lib/libdevmapper.so.1.02:/lib/libdevmapper.so.1.02:ro"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "/usr/local/bin/docker:/usr/local/bin/docker"
   marathon:
