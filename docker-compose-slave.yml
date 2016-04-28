@@ -4,7 +4,7 @@ services:
     build: "./mesos"
     command: |
         mesos slave \
-            --advertise_ip=192.168.99.101 \
+            --advertise_ip=192.168.99.102 \
             --log_dir=/var/log/mesos \
             --containerizers=docker,mesos \
             --executor_registration_timeout=5mins \
@@ -28,3 +28,10 @@ services:
       - "/usr/local/lib/libdevmapper.so.1.02:/lib/libdevmapper.so.1.02:ro"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "/usr/local/bin/docker:/usr/local/bin/docker"
+  mesos_dns:
+    image: "mesosphere/mesos-dns:0.5.2"
+    command: "/usr/bin/mesos-dns -v=2 -config=/config.json"
+    network_mode: host
+    volumes:
+      - "./mesos-dns/config.json:/config.json"
+      - "/tmp"

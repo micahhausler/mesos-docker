@@ -23,6 +23,13 @@ services:
     network_mode: host
     ports:
       - "5050:5050"  # Mesos
+  mesos_dns:
+    image: "mesosphere/mesos-dns:0.5.2"
+    command: "/usr/bin/mesos-dns -v=2 -config=/config.json"
+    network_mode: host
+    volumes:
+      - "./mesos-dns/config.json:/config.json"
+      - "/tmp"
   mesos_slave:
     build: "./mesos"
     command: |
