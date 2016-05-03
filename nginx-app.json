@@ -22,7 +22,10 @@
     "volumes": []
   },
   "env": {},
-  "labels": {},
+  "labels":{
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_VHOST": "192.168.99.100"
+  },
   "healthChecks": [
     {
       "protocol": "HTTP",
