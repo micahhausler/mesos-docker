@@ -1,0 +1,30 @@
+{
+  "id": "chronos",
+  "instances": 1,
+  "cpus": 0.5,
+  "cmd": "chronos run_jar --master zk://master.mesos:2181/mesos --zk_hosts master.mesos:2181 --http_port $PORT0 --mesos_framework_name chronos --hostname $HOST --cluster_name MesosInDocker --decline_offer_duration 5000 --disable_after_failures 0 --failover_timeout 604800 --failure_retry 60000 --mesos_task_cpu 0.1 --mesos_task_disk 256.0 --mesos_task_mem 128 --min_revive_offers_interval 5000 --reconciliation_interval 600 --schedule_horizon 60 --task_epsilon 60 --user root --zk_path /chronos/state --zk_timeout 10000",
+  "mem": 512,
+  "ports": [
+    0
+  ],
+  "disk": 0.0,
+  "env": {
+    "NO_OP": ""
+  },
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "docker.io/mesosphere/chronos:chronos-2.5.0-0.1.20160223054243.ubuntu1404-mesos-0.27.1-2.0.226.ubuntu1404",
+      "network": "HOST"
+    }
+  },
+  "healthChecks": [
+    {
+      "intervalSeconds": 60,
+      "maxConsecutiveFailures": 2,
+      "path": "/",
+      "portIndex": 0,
+      "protocol": "HTTP"
+    }
+  ]
+}

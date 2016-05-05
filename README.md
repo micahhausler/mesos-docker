@@ -12,7 +12,6 @@ You can then open (assuming your docker machine ip is 192.168.99.100)
 * [Mesos](http://192.168.99.100:5050)
 * [Zookeeper Exhibitor](http://192.168.99.100:8181)
 * [Marathon](http://192.168.99.100:8080)
-* [Chronos](http://192.168.99.100:4400)
 
 
 ## Configuration notes
@@ -40,3 +39,12 @@ docker-compose -f docker-compose-slave.yml up -d
 
 You may have to edit the `docker-compose-slave.yml` to update the IP addresses for your
 VMs
+
+## Running apps
+
+Use the `create-nginx.sh` and `create-chronos.sh` scripts to post the corresponding
+json files to marathon and run each app.
+
+Chronos is somewhat of a special case, as the application itself is a Mesos framework
+and can create jobs on a schedule
+

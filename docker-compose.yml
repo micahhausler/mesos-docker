@@ -65,13 +65,3 @@ services:
     network_mode: host
     ports:
       - "8080:8080"  # Marathon
-  chronos:
-    build: "./chronos"
-    command: "/usr/bin/chronos"
-    privileged: true
-    network_mode: host
-    ports:
-      - "4400:4400"  # chronos
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
-      - "/usr/local/bin/docker:/usr/local/bin/docker"
