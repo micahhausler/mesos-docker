@@ -118,9 +118,16 @@ to easily navigate to the load balancer in your web browser.
 192.168.99.101 nginx.docker.local
 ```
 
+or run
+
+```
+echo "\n192.168.99.100 nginx.docker.local\n192.168.99.101 nginx.docker.local" | sudo tee -a /etc/hosts
+```
+
+
 Once you have that `/etc/hosts` entry in place, you can go to
 [http://nginx.docker.local](http://nginx.docker.local) and your traffic will be
-loadbalanced!
+load balanced!
 
 ## Configuration notes
 
