@@ -93,6 +93,8 @@ also query the mesos-dns to see where each instance is running:
 dig _nginx._tcp.marathon.mesos @$(docker-machine ip slave2) SRV
 ```
 
+Also be sure to check out the Mesos master UI, and click the "Sandbox" link for each running task. There you can see the STDERR and STDOUT of each task.
+
 ## Running a Load Balancer
 
 Like the previous tasks, the file `./apps/marathon-lb.json` contains a
