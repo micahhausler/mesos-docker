@@ -13,7 +13,7 @@ services:
             --docker_mesos_image=mesosdocker_mesos_slave \
             --docker_socket=/var/run/docker.sock \
             --master=zk://192.168.99.100:2181/mesos \
-            --resources='ports:[80,443,9090,9091,10000-10100,31000-32000]' \
+            --resources='ports:[80-80,443-443,9090-9091,10000-10100,31000-32000]' \
             --no-systemd_enable_support
     privileged: true
     pid: host

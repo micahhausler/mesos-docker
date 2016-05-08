@@ -36,5 +36,9 @@
   "upgradeStrategy": {
     "minimumHealthCapacity": 0.5,
     "maximumOverCapacity": 1
+  },
+  "labels":{
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_VHOST": "nginx.docker.local"
   }
 }

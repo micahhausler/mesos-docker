@@ -43,7 +43,7 @@ services:
             --docker_mesos_image=mesosdocker_mesos_slave \
             --docker_socket=/var/run/docker.sock \
             --master=zk://127.0.0.1:2181/mesos \
-            --resources='ports:[80,443,9090,9091,10000-10100,31000-32000]' \
+            --resources='ports:[80-80,443-443,9090-9091,10000-10100,31000-32000]' \
             --no-systemd_enable_support
     privileged: true
     pid: host
@@ -61,7 +61,11 @@ services:
       - "/usr/local/bin/docker:/usr/local/bin/docker"
   marathon:
     build: "./marathon"
-    command: "java -jar /marathon-runnable.jar --zk zk://127.0.0.1:2181/marathon --master zk://127.0.0.1:2181/mesos --enable_features=vips,task_killing"
+    command: |
+        java -jar /marathon-runnable.jar \
+            --zk zk://127.0.0.1:2181/marathon \
+            --master zk://127.0.0.1:2181/mesos \
+            --enable_features=vips,task_killing
     network_mode: host
     ports:
       - "8080:8080"  # Marathon
