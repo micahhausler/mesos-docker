@@ -61,11 +61,7 @@ services:
       - "/usr/local/bin/docker:/usr/local/bin/docker"
   marathon:
     build: "./marathon"
-    command: |
-        java -jar /marathon-runnable.jar \
-            --zk zk://127.0.0.1:2181/marathon \
-            --master zk://127.0.0.1:2181/mesos \
-            --enable_features=vips,task_killing
+    command: "java -jar /marathon-runnable.jar  --zk zk://127.0.0.1:2181/marathon  --master zk://127.0.0.1:2181/mesos --enable_features=task_killing"
     network_mode: host
     ports:
       - "8080:8080"  # Marathon
