@@ -1,6 +1,6 @@
 version: "2"
 services:
-  zk1:
+  zookeeper:
     image: "micahhausler/docker-zk-exhibitor"
     network_mode: host
     ports:

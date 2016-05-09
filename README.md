@@ -1,6 +1,7 @@
 # Mesos in Docker
 
-This is a short introduction to Mesos meant to get you familiar with spinning up and running a small mesos cluster. 
+This is a short introduction to Mesos meant to get you familiar with spinning up
+and running a small mesos cluster.
 
 ## Assumptions
 
@@ -16,19 +17,31 @@ installation.
 
 ```
 docker-compose build
-docker-compose up -d
+docker-compose create
+docker-compose start zookeeper
 ```
 
-You'll have to wait a few seconds for Zookeeper to spin up, which you can
-watch at the exhibitor endpoint, on port 8181. You can then open:
+You'll have to wait a minute for Zookeeper to spin up, which you can
+watch at the exhibitor endpoint, on port 8181.
 
 * [Zookeeper Exhibitor](http://192.168.99.100:8181)
-* [Mesos](http://192.168.99.100:5050)
+
+Once zookeeper is in a "serving" state, you can start the rest of the services:
+
+```
+docker-compose start
+```
+
+You can then open:
+
+* [Mesos Master](http://192.168.99.100:5050)
 * [Marathon](http://192.168.99.100:8080)
 
 ## Second Slave
 
-To run a second slave using docker-machine, first create the machine:
+Runing a second slave is entirely optional, but will help demonstrate load
+balancing later on. To run a second slave using docker-machine, first create
+the machine:
 
 ```
 docker-machine create -d virtualbox --virtualbox-cpu-count 1 --virtualbox-memory=1024 slave2
@@ -73,7 +86,7 @@ You can also use mesos-dns to find where chronos is running. See the
 more information.
 
 ```
-dig _chronos._tcp.marathon.mesos @$(docker-machine ip) SRV
+dig _chronos._tcp.marathon.mesos @192.168.99.100 SRV
 ```
 
 ## Running an Nginx app
@@ -90,10 +103,11 @@ You should see 2 instances of nginx staging and eventually running. You can
 also query the mesos-dns to see where each instance is running:
 
 ```
-dig _nginx._tcp.marathon.mesos @$(docker-machine ip slave2) SRV
+dig _nginx._tcp.marathon.mesos @192.168.99.100 SRV
 ```
 
-Also be sure to check out the Mesos master UI, and click the "Sandbox" link for each running task. There you can see the STDERR and STDOUT of each task.
+Also be sure to check out the Mesos master UI, and click the "Sandbox" link for
+each running task. There you can see the STDERR and STDOUT of each task.
 
 ## Running a Load Balancer
 

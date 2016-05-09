@@ -13,6 +13,6 @@ for vm in $(docker-machine ls --filter STATE=Running -q); do
 
     # If it failed, try to bring up mesos-DNS
     if [ $? -ne 0 ]; then
-        docker-compose -H tcp://$(docker-machine ip slave2):2376 start mesos_dns
+        docker-compose -H tcp://$(docker-machine ip ${vm}):2376 start mesos_dns
     fi
 done
