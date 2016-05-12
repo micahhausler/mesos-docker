@@ -3,6 +3,12 @@
 This is a short introduction to Mesos meant to get you familiar with spinning up
 and running a small mesos cluster.
 
+## Installation
+
+This guide requires Docker installed from
+[docker-toolbox](https://www.docker.com/products/docker-toolbox) with at least
+version 1.11.0. Older versions may work, but no guarantees are made.
+
 ## Assumptions
 
 The following links and the provided configuration files assume that your
@@ -44,8 +50,8 @@ balancing later on. To run a second slave using docker-machine, first create
 the machine:
 
 ```
-docker-machine create -d virtualbox --virtualbox-cpu-count 1 --virtualbox-memory=1024 slave2
-eval $(docker-machine  env slave2)
+./create_machines.sh
+eval $(docker-machine env mesos2)
 docker-compose -f docker-compose-slave.yml build
 docker-compose -f docker-compose-slave.yml up -d
 ```
@@ -62,7 +68,14 @@ Run the provided `update_resolv.sh` script in order for each VM to use the
 mesos-dns resolver.
 
 ```
-bash update_resolv.sh
+./update_resolv.sh setup
+```
+
+After you are done running mesos, run the cleanup command so the VM reverts to
+its original nameserver
+
+```
+./update_resolv.sh cleanup
 ```
 
 ## Running Chronos
@@ -137,7 +150,6 @@ or run
 ```
 echo "\n192.168.99.100 nginx.docker.local\n192.168.99.101 nginx.docker.local" | sudo tee -a /etc/hosts
 ```
-
 
 Once you have that `/etc/hosts` entry in place, you can go to
 [http://nginx.docker.local](http://nginx.docker.local) and your traffic will be
