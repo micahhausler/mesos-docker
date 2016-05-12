@@ -16,9 +16,6 @@ default and secondary docker VM's have the addresses of `192.168.99.100` and
 `192.168.99.101`. If yours differ, you will have to modify the configuration
 and compose files with your docker VM IP addresses.
 
-This project also assumes you're running the standard docker toolbox
-installation.
-
 ## Setup
 
 ```
