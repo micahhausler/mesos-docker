@@ -1,0 +1,36 @@
+{
+  "id": "grafana",
+  "cmd": null,
+  "cpus": 1,
+  "mem": 512,
+  "disk": 128,
+  "instances": 1,
+  "container": {
+    "docker": {
+      "image": "grafana/grafana:master",
+      "network": "BRIDGE",
+      "forcePullImage": true,
+      "portMappings": [
+        {
+          "containerPort": 3000,
+          "protocol": "tcp",
+          "name": "http"
+        }
+      ]
+    },
+    "type": "DOCKER",
+    "volumes": []
+  },
+  "env": {},
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/login",
+      "portIndex": 0,
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ]
+}

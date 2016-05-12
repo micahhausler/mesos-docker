@@ -1,0 +1,37 @@
+{
+  "id": "prometheus",
+  "cmd": null,
+  "cpus": 1,
+  "mem": 512,
+  "disk": 512,
+  "instances": 1,
+  "container": {
+    "docker": {
+      "image": "micahhausler/prometheus-mesos",
+      "network": "BRIDGE",
+      "forcePullImage": true,
+      "portMappings": [
+        {
+          "containerPort": 9090,
+          "hostPort": 10000,
+          "protocol": "tcp",
+          "name": "http"
+        }
+      ]
+    },
+    "type": "DOCKER",
+    "volumes": []
+  },
+  "env": {},
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/graph",
+      "portIndex": 0,
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ]
+}

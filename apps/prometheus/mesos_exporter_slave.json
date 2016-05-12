@@ -1,0 +1,40 @@
+{
+  "id": "mesos-exporter-slave",
+  "cmd": null,
+  "cpus": 0.2,
+  "mem": 64,
+  "disk": 0,
+  "instances": 1,
+  "container": {
+    "docker": {
+      "image": "micahhausler/mesos_exporter",
+      "network": "BRIDGE",
+      "forcePullImage": true,
+      "portMappings": [
+        {
+          "containerPort": 9110,
+          "hostPort": 10002,
+          "protocol": "tcp",
+          "name": "http"
+        }
+      ]
+    },
+    "type": "DOCKER",
+    "volumes": []
+  },
+  "env": {},
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/metrics",
+      "portIndex": 0,
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  args: [
+    "-slave", "http://slave.mesos:5050"
+  ]
+}

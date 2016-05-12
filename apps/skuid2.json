@@ -1,0 +1,44 @@
+{
+  "id": "skuid",
+  "cmd": null,
+  "cpus": 0.2,
+  "mem": 128,
+  "disk": 0,
+  "instances": 8,
+  "container": {
+    "docker": {
+      "image": "micahhausler/skuid_logo:v2",
+      "network": "BRIDGE",
+      "forcePullImage": true,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "protocol": "tcp",
+          "name": "http"
+        }
+      ]
+    },
+    "type": "DOCKER",
+    "volumes": []
+  },
+  "env": {},
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/index.html",
+      "portIndex": 0,
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  "upgradeStrategy": {
+    "minimumHealthCapacity": 0.5,
+    "maximumOverCapacity": 1
+  },
+  "labels":{
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_VHOST": "skuid.docker.local"
+  }
+}
