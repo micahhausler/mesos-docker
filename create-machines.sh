@@ -10,6 +10,8 @@ if [ $DEFAULT_EXISTS -eq 1 ]; then
         --virtualbox-cpu-count 2 \
         --virtualbox-memory=2048 \
         default
+else
+    echo "default machine exists"
 fi
 
 docker-machine ls -q | grep -q "mesos2"

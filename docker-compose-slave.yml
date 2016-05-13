@@ -4,7 +4,7 @@ services:
     build: "./mesos"
     command: |
         mesos slave \
-            --advertise_ip=192.168.99.102 \
+            --advertise_ip=192.168.99.101 \
             --log_dir=/var/log/mesos \
             --containerizers=docker,mesos \
             --executor_registration_timeout=5mins \

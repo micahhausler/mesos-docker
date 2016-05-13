@@ -22,14 +22,15 @@ cleanup_resolv() {
     for vm in default mesos2;  do
         echo "Resetting /etc/resolv.conf on ${vm}"
         docker-machine ssh $vm sudo mv /etc/resolv.conf.bak /etc/resolv.conf
-        docker-machine ssh $vm "$command"
     done
 }
 
 case "$1" in
     setup)
+        setup_resolv
         ;;
     cleanup)
+        cleanup_resolv
         ;;
     *)
         echo $"Usage: $0 {setup|cleanup}"

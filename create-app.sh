@@ -20,7 +20,7 @@ case "$1" in
         create_app ./apps/marathon-lb.json
         ;;
     *)
-        $"Usage: $0 {chronos|nginx|marathon-lb}"
+        echo $"Usage: $0 {chronos|nginx|marathon-lb}"
         exit 1
         ;;
 esac
