@@ -3,6 +3,9 @@
 This is a short introduction to Mesos meant to get you familiar with spinning up
 and running a small mesos cluster.
 
+* Video of this demo: https://www.youtube.com/watch?v=PdSmMT0IGx4
+* Slides - https://speakerdeck.com/micahhausler/introduction-to-mesos
+
 ## Installation
 
 This guide requires Docker installed from
@@ -47,7 +50,7 @@ balancing later on. To run a second slave using docker-machine, first create
 the machine:
 
 ```
-./create_machines.sh
+./create-machines.sh
 eval $(docker-machine env mesos2)
 docker-compose -f docker-compose-slave.yml build
 docker-compose -f docker-compose-slave.yml up -d
@@ -61,7 +64,7 @@ for your VMs if the address is not `192.168.99.101`
 [mesos-dns](https://mesosphere.github.io) is an open-source DNS that uses Mesos
 for describing where tasks are running.
 
-Run the provided `update_resolv.sh` script in order for each VM to use the
+Run the provided `update-resolv.sh` script in order for each VM to use the
 mesos-dns resolver.
 
 ```
